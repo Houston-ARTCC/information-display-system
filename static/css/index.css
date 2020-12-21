@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
+
+.background {
+    color: white;
+    text-align: center;
+    height: 100vh;
+    background: url('../img/background.jpg') 50% 50%/cover;
+}
+.dimmed {
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-top: 40vh;
+}
+h1 {
+    font: 800 60px 'Montserrat', sans-serif;
+}
