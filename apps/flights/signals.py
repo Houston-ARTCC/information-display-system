@@ -5,7 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.forms import model_to_dict
 
-from flights.models import EnrouteFlight
+from .models import EnrouteFlight
 
 
 @receiver(post_save, sender=EnrouteFlight)

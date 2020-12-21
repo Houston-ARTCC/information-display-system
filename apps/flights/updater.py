@@ -2,7 +2,7 @@ import requests
 from apscheduler.schedulers.background import BackgroundScheduler
 from django.conf import settings
 
-from flights.models import EnrouteFlight
+from .models import EnrouteFlight
 
 
 def update_scheduler():
@@ -16,21 +16,21 @@ def get_pilots():
     data_array = [line.split(':') for line in data.split('\n')]
     pilot_clients = {client[0]: client for client in data_array if len(client) == 42 and client[3] == 'PILOT'}
 
-    for waypoint in settings.CROSSING_WAYPOINTS:
-        for pilot in pilot_clients.values():
-            if waypoint in pilot[30]:
-                if not EnrouteFlight.objects.filter(callsign=pilot[0]).exists():
-                    EnrouteFlight(
-                        callsign=pilot[0],
-                        aircraft=pilot[9],
-                        tas_filed=pilot[10],
-                        tas_actual=pilot[8],
-                        post_fix=waypoint,
-                        altitude=pilot[7],
-                        route=pilot[30],
-                        transponder=pilot[17],
-                        arrival=pilot[13][0] == 'K' or pilot[13][0] == 'C'
-                    ).save()
+    # for waypoint in settings.CROSSING_WAYPOINTS:
+    #     for pilot in pilot_clients.values():
+    #         if waypoint in pilot[30]:
+    #             if not EnrouteFlight.objects.filter(callsign=pilot[0]).exists():
+    #                 EnrouteFlight(
+    #                     callsign=pilot[0],
+    #                     aircraft=pilot[9],
+    #                     tas_filed=pilot[10],
+    #                     tas_actual=pilot[8],
+    #                     post_fix=waypoint,
+    #                     altitude=pilot[7],
+    #                     route=pilot[30],
+    #                     transponder=pilot[17],
+    #                     arrival=pilot[13][0] == 'K' or pilot[13][0] == 'C'
+    #                 ).save()
 
     for flight in EnrouteFlight.objects.all():
         if flight.callsign in pilot_clients:
